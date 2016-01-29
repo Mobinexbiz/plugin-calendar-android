@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Smartface Calendar Plugin</string>
+    <item name="caldroid_container" type="id">1453</item>
+</resources>

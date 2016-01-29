@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<biz.mobinex.smartfaceplugin.SmartfaceCalendar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/caldroid_light_red"
+    android:padding="20dp"
+    tools:ignore="Deprecated">
+
+
+    <!--<fragment
+        android:name="com.roomorama.caldroid.CaldroidFragment"
+        android:id="@+id/caldroid_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/calendar_view" />-->
+
+    <FrameLayout
+        android:id="@+id/smfc_plugin_android_caldroid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/caldroid_light_red"
+        android:backgroundTint="@color/caldroid_holo_blue_light" />
+
+</biz.mobinex.smartfaceplugin.SmartfaceCalendar>
