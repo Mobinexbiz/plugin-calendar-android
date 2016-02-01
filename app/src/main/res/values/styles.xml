@@ -90,7 +90,7 @@
 
     <style name="CaldroidDefaultLeftButton" parent="CaldroidDefaultArrowButton">
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:background">@drawable/left_arrow</item>
+        <item name="android:background">@drawable/left</item>
     </style>
 
     <style name="CaldroidDefaultMonthName">
@@ -109,7 +109,7 @@
 
     <style name="CaldroidDefaultRightButton" parent="CaldroidDefaultArrowButton">
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:background">@drawable/right_arrow</item>
+        <item name="android:background">@drawable/right</item>
     </style>
 
     <style name="CaldroidDefaultSquareCell" parent="CaldroidDefaultCell" />

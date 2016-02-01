@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
                                     0, top);
 
                     smartfaceCalendar.setSwipeEnabled(false);
-
+                    smartfaceCalendar.setNextImage("right");
+                    smartfaceCalendar.setPreviousImage("left");
                     viewGroup.addView(smartfaceCalendar, 1);
                     isCalendarAdded = true;
                 }
