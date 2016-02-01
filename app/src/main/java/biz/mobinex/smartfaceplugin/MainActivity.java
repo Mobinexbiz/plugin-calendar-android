@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                                     AbsoluteLayout.LayoutParams.WRAP_CONTENT,
                                     0, top);
 
+                    smartfaceCalendar.setSwipeEnabled(false);
+
                     viewGroup.addView(smartfaceCalendar, 1);
                     isCalendarAdded = true;
                 }

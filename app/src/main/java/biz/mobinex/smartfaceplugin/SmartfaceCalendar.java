@@ -51,6 +51,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Log tag.
      */
     public static final String TAG = "SmartfaceCalendar";
+    public static final String KEY_NEW_MONTH = "newMonth";
+    public static final String KEY_OLD_MONTH = "oldMonth";
 
     /**
      * SMFJ object reference.
@@ -193,10 +195,12 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         public void onCaldroidViewCreated() {
         }
     };
+
     /**
      * Background color. Default is white.
      */
     private String fillColor = "#FFFFFFFF";
+
     /**
      * Right arrow.
      */
@@ -205,18 +209,22 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Left arrow.
      */
     private String previousImage;
+
     /**
      * Locale of the calender.
      */
     private String localization;
+
     /**
      * Minimum date to show.
      */
     private String minDate;
+
     /**
      * Maximum date to show.
      */
     private String maxDate;
+
     /**
      * Calendar on touch listener.
      */
@@ -226,6 +234,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             return onCalendarTouched(event);
         }
     };
+
     /**
      * On dismiss listener for javaCalendar dialog.
      */
@@ -235,6 +244,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             onCalendarHide();
         }
     };
+
     /**
      * Constructor for use in Smartface.
      *
@@ -256,7 +266,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         caldroidFragment.setCaldroidListener(listener);
         FragmentManager fm = appCompatActivity.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.caldroid_container, caldroidFragment).commit();
+        ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
         setMinimumWidth(width);
         setMinimumHeight(height);
         setTop(y);
@@ -280,6 +290,12 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             }
         });
     }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
+
     /**
      * Default constructor.
      *
@@ -488,6 +504,11 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public void setSwipeEnabled(boolean swipeEnabled) {
         this.swipeEnabled = swipeEnabled;
+        Bundle arguments = caldroidFragment.getArguments();
+        if (arguments == null) arguments = new Bundle();
+        arguments.putBoolean(CaldroidFragment.ENABLE_SWIPE, swipeEnabled);
+        caldroidFragment.setArguments(arguments);
+        caldroidFragment.refreshView();
     }
 
     /**
@@ -1008,8 +1029,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         try {
             if (onMonthChanged != null) {
                 JSONObject dateJson = new JSONObject();
-                dateJson.put("newMonth", month);
-                dateJson.put("oldMonth", smartfaceCalendar.month);
+                dateJson.put(KEY_NEW_MONTH, month);
+                dateJson.put(KEY_OLD_MONTH, smartfaceCalendar.month);
                 smartfaceCalendar.month = month;
                 SMFJSObject[] arguments = new SMFJSObject[1];
                 arguments[0] = new SMFJSObject(dateJson);
