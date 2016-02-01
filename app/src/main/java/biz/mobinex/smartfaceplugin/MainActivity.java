@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout topGroup;
     private ViewGroup viewGroup;
     private MainActivity mainActivity = this;
+    private boolean isCalendarAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +60,19 @@ public class MainActivity extends AppCompatActivity {
         topGroup.post(new Runnable() {
             @Override
             public void run() {
-                int top = topGroup.getHeight();
 
-                smartfaceCalendar =
-                        new SmartfaceCalendar(mainActivity,
-                                AbsoluteLayout.LayoutParams.MATCH_PARENT,
-                                AbsoluteLayout.LayoutParams.WRAP_CONTENT,
-                                0, top);
+                if (!isCalendarAdded) {
+                    int top = topGroup.getHeight();
 
-                viewGroup.addView(smartfaceCalendar, 1);
+                    smartfaceCalendar =
+                            new SmartfaceCalendar(mainActivity,
+                                    AbsoluteLayout.LayoutParams.MATCH_PARENT,
+                                    AbsoluteLayout.LayoutParams.WRAP_CONTENT,
+                                    0, top);
+
+                    viewGroup.addView(smartfaceCalendar, 1);
+                    isCalendarAdded = true;
+                }
             }
         });
     }

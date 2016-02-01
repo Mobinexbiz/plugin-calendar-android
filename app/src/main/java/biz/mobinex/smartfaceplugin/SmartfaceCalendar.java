@@ -1,6 +1,5 @@
 package biz.mobinex.smartfaceplugin;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -168,13 +167,32 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     private int height;
     /**
-     * X coordinate of calendar.
+     * Caldroid listener.
      */
-    private int top;
-    /**
-     * Y coordinate of calendar.
-     */
-    private int left;
+    final CaldroidListener listener = new CaldroidListener() {
+
+        @Override
+        public void onSelectDate(Date date, View view) {
+            onDateSelected(date);
+        }
+
+        @Override
+        public void onChangeMonth(int month, int year) {
+            smartfaceCalendar.onChangeMonth(month, year);
+            LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
+            setLayoutParams(params);
+            caldroidFragment.refreshView();
+        }
+
+        @Override
+        public void onLongClickDate(Date date, View view) {
+            smartfaceCalendar.onLongClickDate(date);
+        }
+
+        @Override
+        public void onCaldroidViewCreated() {
+        }
+    };
     /**
      * Background color. Default is white.
      */
@@ -209,49 +227,12 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         }
     };
     /**
-     * On show listener for javaCalendar dialog.
-     */
-    private DialogInterface.OnShowListener onShowListener = new DialogInterface.OnShowListener() {
-        @Override
-        public void onShow(DialogInterface dialog) {
-            onCalendarShow();
-        }
-    };
-    /**
      * On dismiss listener for javaCalendar dialog.
      */
     private DialogInterface.OnDismissListener onDismissListener = new DialogInterface.OnDismissListener() {
         @Override
         public void onDismiss(DialogInterface dialog) {
             onCalendarHide();
-        }
-    };
-    /**
-     * Caldroid listener.
-     */
-    final CaldroidListener listener = new CaldroidListener() {
-
-        @Override
-        public void onSelectDate(Date date, View view) {
-            onDateSelected(date);
-        }
-
-        @Override
-        public void onChangeMonth(int month, int year) {
-            smartfaceCalendar.onChangeMonth(month, year);
-            LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
-            setLayoutParams(params);
-            caldroidFragment.refreshView();
-        }
-
-        @Override
-        public void onLongClickDate(Date date, View view) {
-            smartfaceCalendar.onLongClickDate(date);
-        }
-
-        @Override
-        public void onCaldroidViewCreated() {
-            onCalendarViewCreated();
         }
     };
     /**
@@ -278,12 +259,26 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         ft.replace(R.id.caldroid_container, caldroidFragment).commit();
         setMinimumWidth(width);
         setMinimumHeight(height);
-        top = y;
-        left = x;
+        setTop(y);
+        setLeft(x);
         this.width = width;
         this.height = height;
         LayoutParams params = new LayoutParams(width, height, x, y);
         setLayoutParams(params);
+        setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                try {
+                    if (visibility == VISIBLE) {
+                        if (onShow != null) onShow.callAsFunction(null, null);
+                    } else {
+                        if (onHide != null) onHide.callAsFunction(null, null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
     /**
      * Default constructor.
@@ -336,13 +331,16 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
 
     public void setWidth(int width) {
         this.width = width;
-        LayoutParams params = new LayoutParams(width, -2, getLeft(), getTop());
+        setMinimumWidth(width);
+        invalidate();
+        LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
         setLayoutParams(params);
         caldroidFragment.refreshView();
     }
 
     public void setHeight(int height) {
         this.height = height;
+        setMinimumHeight(height);
         LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
         setLayoutParams(params);
         caldroidFragment.refreshView();
@@ -1076,35 +1074,6 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Called when javaCalendar view crated event.
-     */
-    private void onCalendarViewCreated() {
-        Dialog dialog = caldroidFragment.getDialog();
-
-        if (dialog != null) {
-            caldroidFragment.getDialog().setOnShowListener(onShowListener);
-            caldroidFragment.getDialog().setOnDismissListener(onDismissListener);
-        }
-
-        View view = caldroidFragment.getView();
-
-        if (view != null) {
-            view.setOnTouchListener(calendarOnTouchListener);
-            view.setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
-                @Override
-                public void onSystemUiVisibilityChange(int visibility) {
-
-                    if (visibility == View.VISIBLE) {
-                        onCalendarShow();
-                    } else {
-                        onCalendarHide();
-                    }
-                }
-            });
         }
     }
 
