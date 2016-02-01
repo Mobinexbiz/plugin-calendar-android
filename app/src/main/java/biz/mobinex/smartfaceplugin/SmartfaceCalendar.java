@@ -158,6 +158,23 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Year.
      */
     private int year;
+
+    /**
+     * Calendar width.
+     */
+    private int width;
+    /**
+     * Calendar height
+     */
+    private int height;
+    /**
+     * X coordinate of calendar.
+     */
+    private int top;
+    /**
+     * Y coordinate of calendar.
+     */
+    private int left;
     /**
      * Background color. Default is white.
      */
@@ -222,6 +239,9 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         @Override
         public void onChangeMonth(int month, int year) {
             smartfaceCalendar.onChangeMonth(month, year);
+            LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
+            setLayoutParams(params);
+            caldroidFragment.refreshView();
         }
 
         @Override
@@ -234,7 +254,6 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             onCalendarViewCreated();
         }
     };
-
     /**
      * Constructor for use in Smartface.
      *
@@ -259,10 +278,13 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         ft.replace(R.id.caldroid_container, caldroidFragment).commit();
         setMinimumWidth(width);
         setMinimumHeight(height);
+        top = y;
+        left = x;
+        this.width = width;
+        this.height = height;
         LayoutParams params = new LayoutParams(width, height, x, y);
         setLayoutParams(params);
     }
-
     /**
      * Default constructor.
      *
@@ -310,6 +332,20 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             calendar.add(Calendar.DATE, 1);
         }
         return dates;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+        LayoutParams params = new LayoutParams(width, -2, getLeft(), getTop());
+        setLayoutParams(params);
+        caldroidFragment.refreshView();
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+        LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
+        setLayoutParams(params);
+        caldroidFragment.refreshView();
     }
 
     /**
@@ -759,6 +795,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     public void setLayoutParams(int width, int height, int x, int y) {
         LayoutParams params = new LayoutParams(width, height, x, y);
         super.setLayoutParams(params);
+        caldroidFragment.refreshView();
     }
 
     /**
