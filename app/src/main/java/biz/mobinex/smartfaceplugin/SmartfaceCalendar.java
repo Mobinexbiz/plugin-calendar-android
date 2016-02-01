@@ -1154,9 +1154,9 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     /**
      * Changes displayed month and selects today.
      */
-    private void goToday() {
-        Calendar calendar = Calendar.getInstance(new Locale(localization));
-        caldroidFragment.setCalendarDate(calendar.getTime());
+    public void goToday() {
+        Calendar calendar = Calendar.getInstance();
+        caldroidFragment.moveToDate(calendar.getTime());
     }
 
     /**

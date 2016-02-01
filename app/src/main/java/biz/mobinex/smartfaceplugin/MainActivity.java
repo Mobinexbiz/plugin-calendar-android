@@ -51,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
                 smartfaceCalendar.setHeight(500);
             }
         });
+
+        findViewById(R.id.test_go_today).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                smartfaceCalendar.goToday();
+            }
+        });
     }
 
     @Override
