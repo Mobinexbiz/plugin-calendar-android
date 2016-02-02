@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -28,40 +29,78 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <Button
-            android:id="@+id/test_set_top"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="setTop(1000)"
-            tools:ignore="HardcodedText" />
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
-        <Button
-            android:id="@+id/test_set_left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="setLeft(1000)"
-            tools:ignore="HardcodedText"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-        <Button
-            android:id="@+id/test_set_width"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="setWidth(500)"
-            tools:ignore="HardcodedText"/>
+                <Button
+                    android:id="@+id/test_set_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="setTop(1000)"
+                    tools:ignore="HardcodedText"/>
 
-        <Button
-            android:id="@+id/test_set_height"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="setHeight(500)"
-            tools:ignore="HardcodedText"/>
+                <Button
+                    android:id="@+id/test_set_left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="setLeft(1000)"
+                    tools:ignore="HardcodedText"/>
 
-        <Button
-            android:id="@+id/test_go_today"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="goToday()"
-            tools:ignore="HardcodedText"/>
+                <Button
+                    android:id="@+id/test_go_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="goToday()"
+                    tools:ignore="HardcodedText"/>
+
+                <Button
+                    android:id="@+id/test_toggle_touch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Toggle Touch"
+                    tools:ignore="HardcodedText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/test_set_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="setWidth(500)"
+                    tools:ignore="HardcodedText"/>
+
+                <Button
+                    android:id="@+id/test_set_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="setHeight(500)"
+                    tools:ignore="HardcodedText"/>
+
+                <Button
+                    android:id="@+id/test_toggle_swipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Toggle Swipe"
+                    tools:ignore="HardcodedText"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

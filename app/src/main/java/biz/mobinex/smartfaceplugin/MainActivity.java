@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         topGroup = (LinearLayout) findViewById(R.id.top_group);
-
         viewGroup = (ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0);
 
         findViewById(R.id.test_set_top).setOnClickListener(new View.OnClickListener() {
@@ -58,6 +57,20 @@ public class MainActivity extends AppCompatActivity {
                 smartfaceCalendar.goToday();
             }
         });
+
+        findViewById(R.id.test_toggle_swipe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                smartfaceCalendar.setSwipeEnabled(!smartfaceCalendar.isSwipeEnabled());
+            }
+        });
+
+        findViewById(R.id.test_toggle_touch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                smartfaceCalendar.setTouchEnabled(!smartfaceCalendar.isTouchEnabled());
+            }
+        });
     }
 
     @Override
@@ -69,15 +82,11 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 if (!isCalendarAdded) {
-                    int top = topGroup.getHeight();
-
                     smartfaceCalendar =
                             new SmartfaceCalendar(mainActivity,
                                     AbsoluteLayout.LayoutParams.MATCH_PARENT,
                                     AbsoluteLayout.LayoutParams.WRAP_CONTENT,
-                                    0, top);
-
-                    smartfaceCalendar.setSwipeEnabled(false);
+                                    0, topGroup.getHeight());
                     smartfaceCalendar.setNextImage("right");
                     smartfaceCalendar.setPreviousImage("left");
                     viewGroup.addView(smartfaceCalendar, 1);

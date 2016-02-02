@@ -61,100 +61,121 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     public static SMFJSObject smfJSClass = null;
 
     // Event Listeners //
+
     /**
      * Javascript on touch callback.
      */
     public SMFJSObject onTouch;
+
     /**
      * Javascript on touch end callback.
      */
     public SMFJSObject onTouchEnd;
+
     /**
      * Javascript on show callback.
      */
     public SMFJSObject onShow;
+
     /**
      * Javascript on hide callback.
      */
     public SMFJSObject onHide;
+
     /**
      * Touch enable value of javaCalendar view.
      */
-    public boolean touchEnabled;
+    public boolean touchEnabled = true;
+
     /**
      * Swipe enable value of javaCalendar view.
      */
-    public boolean swipeEnabled;
+    public boolean swipeEnabled = true;
+
     /**
      * Selected dates beginning.
      * Must be in ISO format.
      * Default is null;
      */
     public String selectedFromDate;
+
     /**
      * Selected dates ending.
      * Must be in ISO format.
      * Default is null;
      */
     public String selectedToDate;
+
     /**
      * Selected dates array.
      * Must be a JSON array string.
      * Default is null;
      */
     public List<String> selectedDates;
+
     /**
      * Disabled dates beginning.
      * Must be in ISO format.
      * Default is null;
      */
     public String disabledFromDate;
+
     /**
      * Disabled dates ending.
      * Must be in ISO format.
      * Default is null;
      */
     public String disabledToDate;
+
     /**
      * Disabled dates array.
      * Default is null;
      */
     public String[] disabledDates;
+
     /**
      * Javascript callback for on date selected callback.
      * Used in Caldroid listener.
      */
     private SMFJSObject onDateSelected = null;
+
     /**
      * Javascript callback for on long pressed callback.
      */
     private SMFJSObject onLongPressed;
+
     /**
      * Javascript callback for on month changed callback.
      */
     private SMFJSObject onMonthChanged;
+
     /**
      * Reference to instance.
      * To use in async methods.
      */
     private SmartfaceCalendar smartfaceCalendar = this;
+
     /**
      * Caldroid instance.
      * This is the calender itself.
      */
     private CaldroidFragment caldroidFragment;
+
     /**
      * Title of the javaCalendar dialog.
      */
     private String title;
+
     /**
      * To get SupportFragmentManager.
      */
     private AppCompatActivity activity;
+
     /**
      * Month.
      */
     private int month;
+
     /**
      * Year.
      */
@@ -164,10 +185,12 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Calendar width.
      */
     private int width;
+
     /**
      * Calendar height
      */
     private int height;
+
     /**
      * Caldroid listener.
      */
@@ -225,6 +248,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     private String maxDate;
 
+    private AppCompatActivity appCompatActivity;
+
     /**
      * Calendar on touch listener.
      */
@@ -256,6 +281,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public SmartfaceCalendar(AppCompatActivity appCompatActivity, int width, int height, int x, int y) {
         super(appCompatActivity.getApplicationContext());
+        this.appCompatActivity = appCompatActivity;
         setId(R.id.caldroid_container);
         caldroidFragment = new CaldroidFragment();
         int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
@@ -507,8 +533,14 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         Bundle arguments = caldroidFragment.getArguments();
         if (arguments == null) arguments = new Bundle();
         arguments.putBoolean(CaldroidFragment.ENABLE_SWIPE, swipeEnabled);
+        FragmentManager fm = appCompatActivity.getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(caldroidFragment).commitAllowingStateLoss();
+        caldroidFragment = new CaldroidFragment();
         caldroidFragment.setArguments(arguments);
-        caldroidFragment.refreshView();
+        caldroidFragment.setCaldroidListener(listener);
+        ft = fm.beginTransaction();
+        ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
     }
 
     /**
@@ -851,12 +883,15 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public void setTouchEnabled(boolean touchEnabled) {
         this.touchEnabled = touchEnabled;
-        View calendarView = caldroidFragment.getView();
+    }
 
-        if (calendarView != null) {
-            calendarView.setFocusableInTouchMode(false);
-            caldroidFragment.refreshView();
-        }
+    /**
+     * Enable or disable touch based on touchEnabled value.
+     * @param ev Motion event.
+     * @return Returns negate of touchEnabled.
+     */
+    public boolean onInterceptTouchEvent (MotionEvent ev){
+        return !touchEnabled;
     }
 
     /**
