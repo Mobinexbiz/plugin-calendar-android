@@ -40,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.test_set_width).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setWidth(500);
+                smartfaceCalendar.setWidth(1000);
             }
         });
 
         findViewById(R.id.test_set_height).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setHeight(500);
+                smartfaceCalendar.setHeight(1000);
             }
         });
 
@@ -71,6 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 smartfaceCalendar.setTouchEnabled(!smartfaceCalendar.isTouchEnabled());
             }
         });
+
+        smartfaceCalendar = new SmartfaceCalendar(mainActivity);
+        smartfaceCalendar.setPreviousImage("left");
+        smartfaceCalendar.setNextImage("right");
     }
 
     @Override
@@ -82,13 +86,10 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 if (!isCalendarAdded) {
-                    smartfaceCalendar =
-                            new SmartfaceCalendar(mainActivity,
-                                    AbsoluteLayout.LayoutParams.MATCH_PARENT,
-                                    AbsoluteLayout.LayoutParams.WRAP_CONTENT,
-                                    0, topGroup.getHeight());
-                    smartfaceCalendar.setNextImage("right");
-                    smartfaceCalendar.setPreviousImage("left");
+                    smartfaceCalendar.setLayoutParams(
+                            AbsoluteLayout.LayoutParams.MATCH_PARENT,
+                            AbsoluteLayout.LayoutParams.WRAP_CONTENT,
+                            0, topGroup.getHeight());
                     viewGroup.addView(smartfaceCalendar, 1);
                     isCalendarAdded = true;
                 }

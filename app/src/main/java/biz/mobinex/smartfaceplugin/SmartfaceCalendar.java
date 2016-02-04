@@ -1,7 +1,6 @@
 package biz.mobinex.smartfaceplugin;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -51,7 +50,15 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Log tag.
      */
     public static final String TAG = "SmartfaceCalendar";
+
+    /**
+     * Key for arguments
+     */
     public static final String KEY_NEW_MONTH = "newMonth";
+
+    /**
+     * Key for arguments
+     */
     public static final String KEY_OLD_MONTH = "oldMonth";
 
     /**
@@ -192,6 +199,16 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     private int height;
 
     /**
+     *
+     */
+    private int y;
+
+    /**
+     *
+     */
+    private int x;
+
+    /**
      * Caldroid listener.
      */
     final CaldroidListener listener = new CaldroidListener() {
@@ -204,9 +221,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         @Override
         public void onChangeMonth(int month, int year) {
             smartfaceCalendar.onChangeMonth(month, year);
-            LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
-            setLayoutParams(params);
-            caldroidFragment.refreshView();
+            //caldroidFragment.refreshView();
         }
 
         @Override
@@ -216,6 +231,24 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
 
         @Override
         public void onCaldroidViewCreated() {
+            try {
+                if (previousImage.contains(".")) {
+                    previousImage = previousImage.substring(0, previousImage.indexOf("."));
+                }
+                Resources resources = appCompatActivity.getResources();
+                String packageName = appCompatActivity.getPackageName();
+                int drawableId = resources.getIdentifier(previousImage, "drawable", packageName);
+                caldroidFragment.getLeftArrowButton().setBackgroundResource(drawableId);
+                if (nextImage.contains(".")) {
+                    nextImage = nextImage.substring(0, nextImage.indexOf("."));
+                }
+                drawableId = resources.getIdentifier(nextImage, "drawable", packageName);
+                caldroidFragment.getRightArrowButton().setBackgroundResource(drawableId);
+                caldroidFragment.refreshView();
+            } catch (Exception e) {
+                Log.e(TAG, "setPreviousImage - Failure to get drawable id.");
+                e.printStackTrace();
+            }
         }
     };
 
@@ -251,64 +284,54 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     private AppCompatActivity appCompatActivity;
 
     /**
-     * Calendar on touch listener.
-     */
-    private View.OnTouchListener calendarOnTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            return onCalendarTouched(event);
-        }
-    };
-
-    /**
-     * On dismiss listener for javaCalendar dialog.
-     */
-    private DialogInterface.OnDismissListener onDismissListener = new DialogInterface.OnDismissListener() {
-        @Override
-        public void onDismiss(DialogInterface dialog) {
-            onCalendarHide();
-        }
-    };
-
-    /**
      * Constructor for use in Smartface.
      *
      * @param appCompatActivity Activity.
      * @param width             Calendar width.
      * @param height            Calendar height.
-     * @param x                 Calendar left position.
-     * @param y                 Calendar top position.
+     * @param x                 Calendar x position.
+     * @param y                 Calendar y position.
      */
     public SmartfaceCalendar(AppCompatActivity appCompatActivity, int width, int height, int x, int y) {
         super(appCompatActivity.getApplicationContext());
+
         this.appCompatActivity = appCompatActivity;
+
         setId(R.id.caldroid_container);
+
         caldroidFragment = new CaldroidFragment();
+
         int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
+
         Bundle arguments = caldroidFragment.getArguments();
-        if (arguments == null) arguments = new Bundle();
+
+        if (arguments == null)
+            arguments = new Bundle();
+
         arguments.putInt(CaldroidFragment.START_DAY_OF_WEEK, firstDayOfWeek);
+
         caldroidFragment.setArguments(arguments);
         caldroidFragment.setCaldroidListener(listener);
-        FragmentManager fm = appCompatActivity.getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
+
         setMinimumWidth(width);
         setMinimumHeight(height);
-        setTop(y);
-        setLeft(x);
+
         this.width = width;
         this.height = height;
+        this.y = y;
+        this.x = x;
+
         LayoutParams params = new LayoutParams(width, height, x, y);
         setLayoutParams(params);
+
         setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
                 try {
                     if (visibility == VISIBLE) {
-                        if (onShow != null) onShow.callAsFunction(null, null);
+                        if (onShow != null) onShow.callAsFunction(onShow, null);
                     } else {
-                        if (onHide != null) onHide.callAsFunction(null, null);
+                        if (onHide != null) onHide.callAsFunction(onShow, null);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -317,9 +340,56 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         });
     }
 
+    /**
+     *
+     * @param appCompatActivity
+     */
+    public SmartfaceCalendar(AppCompatActivity appCompatActivity) {
+        super(appCompatActivity.getApplicationContext());
+
+        this.appCompatActivity = appCompatActivity;
+
+        setId(R.id.caldroid_container);
+
+        caldroidFragment = new CaldroidFragment();
+
+        int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
+
+        Bundle arguments = caldroidFragment.getArguments();
+
+        if (arguments == null)
+            arguments = new Bundle();
+
+        arguments.putInt(CaldroidFragment.START_DAY_OF_WEEK, firstDayOfWeek);
+
+        caldroidFragment.setArguments(arguments);
+        caldroidFragment.setCaldroidListener(listener);
+
+        setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                try {
+                    if (visibility == VISIBLE) {
+                        if (onShow != null) onShow.callAsFunction(onShow, null);
+                    } else {
+                        if (onHide != null) onHide.callAsFunction(onShow, null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     *
+     */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        FragmentManager fm = appCompatActivity.getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
     }
 
     /**
@@ -371,18 +441,23 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         return dates;
     }
 
+    /**
+     *
+     * @param width
+     */
     public void setWidth(int width) {
         this.width = width;
-        setMinimumWidth(width);
-        invalidate();
         LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
         setLayoutParams(params);
         caldroidFragment.refreshView();
     }
 
+    /**
+     *
+     * @param height
+     */
     public void setHeight(int height) {
         this.height = height;
-        setMinimumHeight(height);
         LayoutParams params = new LayoutParams(width, height, getLeft(), getTop());
         setLayoutParams(params);
         caldroidFragment.refreshView();
@@ -646,19 +721,6 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public void setNextImage(String nextImage) {
         this.nextImage = nextImage;
-        try {
-            if (nextImage.contains(".")) {
-                nextImage = nextImage.substring(0, nextImage.indexOf("."));
-            }
-            Resources resources = activity.getResources();
-            String packageName = activity.getPackageName();
-            int drawableId = resources.getIdentifier(nextImage, "drawable", packageName);
-            caldroidFragment.getRightArrowButton().setBackgroundResource(drawableId);
-            caldroidFragment.refreshView();
-        } catch (Exception e) {
-            Log.e(TAG, "setNextImage - Failure to get drawable id.");
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -840,13 +902,16 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      *
      * @param width  Calendar width.
      * @param height Calendar height.
-     * @param x      Calendar left position.
-     * @param y      Calendar top position.
+     * @param x      Calendar x position.
+     * @param y      Calendar y position.
      */
     public void setLayoutParams(int width, int height, int x, int y) {
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
         LayoutParams params = new LayoutParams(width, height, x, y);
         super.setLayoutParams(params);
-        caldroidFragment.refreshView();
     }
 
     /**
@@ -1004,32 +1069,19 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     }
 
     /**
-     * @return Returns left arrow resource name.
+     * @return Returns x arrow resource name.
      */
     public String getPreviousImage() {
         return previousImage;
     }
 
     /**
-     * Sets left arrow image name.
+     * Sets x arrow image name.
      *
      * @param previousImage Image name.
      */
     public void setPreviousImage(String previousImage) {
         this.previousImage = previousImage;
-        try {
-            if (previousImage.contains(".")) {
-                previousImage = previousImage.substring(0, previousImage.indexOf("."));
-            }
-            Resources resources = activity.getResources();
-            String packageName = activity.getPackageName();
-            int drawableId = resources.getIdentifier(previousImage, "drawable", packageName);
-            caldroidFragment.getLeftArrowButton().setBackgroundResource(drawableId);
-            caldroidFragment.refreshView();
-        } catch (Exception e) {
-            Log.e(TAG, "setPreviousImage - Failure to get drawable id.");
-            e.printStackTrace();
-        }
     }
 
     /**
