@@ -630,6 +630,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
         Bundle arguments = caldroidFragment.getArguments();
         if (arguments == null) arguments = new Bundle();
         arguments.putBoolean(CaldroidFragment.ENABLE_SWIPE, swipeEnabled);
+        arguments.putInt(CaldroidFragment.MONTH, caldroidFragment.getMonth());
+        arguments.putInt(CaldroidFragment.YEAR, caldroidFragment.getYear());
         FragmentManager fm = appCompatActivity.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.remove(caldroidFragment).commitAllowingStateLoss();
