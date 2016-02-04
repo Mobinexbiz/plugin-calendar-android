@@ -26,28 +26,28 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.test_set_top).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setTop(topGroup.getHeight() + 100);
+                smartfaceCalendar.setCalendarTop(topGroup.getHeight() + 100);
             }
         });
 
         findViewById(R.id.test_set_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setLeft(100);
+                smartfaceCalendar.setCalendarLeft(100);
             }
         });
 
         findViewById(R.id.test_set_width).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setWidth(1000);
+                smartfaceCalendar.setCalendarWidth(1000);
             }
         });
 
         findViewById(R.id.test_set_height).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setHeight(1000);
+                smartfaceCalendar.setCalendarHeight(1000);
             }
         });
 
