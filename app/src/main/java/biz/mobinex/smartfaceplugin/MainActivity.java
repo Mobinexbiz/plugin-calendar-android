@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         smartfaceCalendar = new SmartfaceCalendar(mainActivity);
         smartfaceCalendar.setPreviousImage("left");
         smartfaceCalendar.setNextImage("right");
+        smartfaceCalendar.setTheme(R.style.CaldroidDefaultDark);
     }
 
     @Override

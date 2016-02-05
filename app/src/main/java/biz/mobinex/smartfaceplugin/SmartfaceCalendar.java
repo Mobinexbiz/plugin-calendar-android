@@ -281,6 +281,14 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     private String maxDate;
 
+    /**
+     * Calendar params
+     */
+    private Bundle arguments = new Bundle();
+
+    /**
+     * Container actiivity
+     */
     private AppCompatActivity appCompatActivity;
 
     /**
@@ -294,27 +302,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public SmartfaceCalendar(AppCompatActivity appCompatActivity, int width, int height, int calendarLeft, int calendarTop) {
         super(appCompatActivity.getApplicationContext());
-
         this.appCompatActivity = appCompatActivity;
-
         setId(R.id.caldroid_container);
-
-        caldroidFragment = new CaldroidFragment();
-
-        int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
-
-        Bundle arguments = caldroidFragment.getArguments();
-
-        if (arguments == null)
-            arguments = new Bundle();
-
-        arguments.putInt(CaldroidFragment.START_DAY_OF_WEEK, firstDayOfWeek);
-
-        caldroidFragment.setArguments(arguments);
-        caldroidFragment.setCaldroidListener(listener);
-
-        setMinimumWidth(width);
-        setMinimumHeight(height);
 
         this.width = width;
         this.height = height;
@@ -346,24 +335,13 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public SmartfaceCalendar(AppCompatActivity appCompatActivity) {
         super(appCompatActivity.getApplicationContext());
-
         this.appCompatActivity = appCompatActivity;
-
         setId(R.id.caldroid_container);
 
-        caldroidFragment = new CaldroidFragment();
-
-        int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
-
-        Bundle arguments = caldroidFragment.getArguments();
-
-        if (arguments == null)
-            arguments = new Bundle();
-
-        arguments.putInt(CaldroidFragment.START_DAY_OF_WEEK, firstDayOfWeek);
-
-        caldroidFragment.setArguments(arguments);
-        caldroidFragment.setCaldroidListener(listener);
+        this.width = width;
+        this.height = height;
+        this.calendarTop = calendarTop;
+        this.calendarLeft = calendarLeft;
 
         setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
             @Override
@@ -382,11 +360,46 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     }
 
     /**
+     * Sets calendar theme.
+     * @param theme Theme resource id.
+     */
+    public void setTheme(int theme) {
+        arguments.putInt(CaldroidFragment.THEME_RESOURCE, theme);
+
+        /*
+        Bundle arguments = caldroidFragment.getArguments();
+        if (arguments == null) arguments = new Bundle();
+        arguments.putInt(CaldroidFragment.THEME_RESOURCE, theme);
+        arguments.putInt(CaldroidFragment.MONTH, caldroidFragment.getMonth());
+        arguments.putInt(CaldroidFragment.YEAR, caldroidFragment.getYear());
+        caldroidFragment.setArguments(arguments);
+
+        View container = activity.findViewById(R.id.caldroid_container);
+
+        if (container != null) {
+            FragmentManager fm = appCompatActivity.getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.remove(caldroidFragment).commitAllowingStateLoss();
+            caldroidFragment = new CaldroidFragment();
+            caldroidFragment.setArguments(arguments);
+            caldroidFragment.setCaldroidListener(listener);
+            ft = fm.beginTransaction();
+            ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
+        }
+        */
+    }
+
+    /**
      *
      */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
+        arguments.putInt(CaldroidFragment.START_DAY_OF_WEEK, firstDayOfWeek);
+        caldroidFragment = new CaldroidFragment();
+        caldroidFragment.setArguments(arguments);
+        caldroidFragment.setCaldroidListener(listener);
         FragmentManager fm = appCompatActivity.getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
