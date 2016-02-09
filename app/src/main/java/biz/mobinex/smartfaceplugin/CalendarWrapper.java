@@ -9,11 +9,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -39,7 +36,7 @@ public class CalendarWrapper {
     /**
      * Log tag.
      */
-    private static final String TAG = "CalendarWrapper";
+    public static final String TAG = "CalendarWrapper";
 
     /**
      * SMFJ object reference.
@@ -51,67 +48,67 @@ public class CalendarWrapper {
      * Javascript callback for on date selected callback.
      * Used in Caldroid listener.
      */
-    public SMFJSObject onDateSelected = null;
+    private SMFJSObject onDateSelected = null;
 
     /**
      * Javascript callback for on long pressed callback.
      */
-    public SMFJSObject onLongPressed;
+    private SMFJSObject onLongPressed;
 
     /**
      * Javascript callback for on month changed callback.
      */
-    public SMFJSObject onMonthChanged;
+    private SMFJSObject onMonthChanged;
 
     /**
      * Javascript on touch callback.
      */
-    public SMFJSObject onTouch;
+    private SMFJSObject onTouch;
 
     /**
      * Javascript on touch end callback.
      */
-    public SMFJSObject onTouchEnd;
+    private SMFJSObject onTouchEnd;
 
     /**
      * Javascript on show callback.
      */
-    public SMFJSObject onShow;
+    private SMFJSObject onShow;
 
     /**
      * Javascript on hide callback.
      */
-    public SMFJSObject onHide;
+    private SMFJSObject onHide;
 
     /**
      * Y value of the calendar View.
      */
-    public int top;
+    private int top;
 
     /**
      * X value of the calendar View.
      */
-    public int left;
+    private int left;
 
     /**
      * Setter for calendar view width.
      */
-    public int width;
+    private int width;
 
     /**
      * Calendar height.
      */
-    public int height;
+    private int height;
 
     /**
      * Touch enable value of calendar view.
      */
-    public boolean touchEnabled;
+    private boolean touchEnabled;
 
     /**
      * Swipe enable value of calendar view.
      */
-    public boolean swipeEnabled;
+    private boolean swipeEnabled;
 
     /**
      * Reference to instance.
@@ -666,85 +663,6 @@ public class CalendarWrapper {
     public void showCalendarDialog() {
         caldroidFragment.setCaldroidListener(listener);
         caldroidFragment.show(fragmentManager, TAG);
-    }
-
-
-    /**
-     * Shows calendar as a fragment.
-     */
-    public void addCalendarView(AbsoluteLayout.LayoutParams layoutParams) {
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View calendarView = layoutInflater.inflate(R.layout.mobinex_calendar, null);
-        calendarView.setLayoutParams(layoutParams);
-        activity.addContentView(calendarView, layoutParams);
-        //FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.container, caldroidFragment).commit();
-    }
-
-
-    /**
-     * Shows calendar as a fragment.
-     */
-    public void addCalendarView() {
-        AbsoluteLayout.LayoutParams layoutParams =
-                new AbsoluteLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0);
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View calendarView = layoutInflater.inflate(R.layout.mobinex_calendar, null);
-        calendarView.setLayoutParams(layoutParams);
-        activity.addContentView(calendarView, layoutParams);
-        //FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.container, caldroidFragment).commit();
-    }
-
-
-    /**
-     * Shows calendar as a fragment.
-     */
-    public SmartfaceCalendar getCalendarView(int width, int height, int x, int y) {
-        SmartfaceCalendar absoluteLayout =
-                (SmartfaceCalendar) activity.getLayoutInflater().inflate(
-                        R.layout.mobinex_calendar, null);
-        absoluteLayout.setLayoutParams(new AbsoluteLayout.LayoutParams(width, height, 0, 0));
-        return absoluteLayout;
-    }
-
-
-    /**
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @return
-     */
-    public SmartfaceCalendar getCalendarView(int width, int height, int x, int y, int z) {
-        AbsoluteLayout.LayoutParams layoutParams =
-                new AbsoluteLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, x, y);
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        SmartfaceCalendar calendarView = (SmartfaceCalendar) layoutInflater.inflate(R.layout.mobinex_calendar, null);
-        calendarView.setLayoutParams(layoutParams);
-        return calendarView;
-    }
-
-
-    public void addCalendarFragment() {
-        //FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.container, caldroidFragment).commit();
-    }
-
-
-    /**
-     * Shows calendar as a fragment.
-     */
-    public void addCalendarView(ViewGroup root) {
-        caldroidFragment = CaldroidFragment.newInstance(title, month, year);
-        LayoutInflater layoutInflater = activity.getLayoutInflater();
-        View calendarView = layoutInflater.inflate(R.layout.mobinex_calendar, null);
-        root.addView(calendarView);
-        //FragmentManager fragmentManager = activity.getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.container, caldroidFragment).commit();
     }
 
 

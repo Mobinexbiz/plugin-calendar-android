@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SmartfaceCalendar smartfaceCalendar;
+    private Calendar calendar;
     private LinearLayout topGroup;
     private ViewGroup viewGroup;
     private MainActivity mainActivity = this;
@@ -26,56 +26,56 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.test_set_top).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setCalendarTop(topGroup.getHeight() + 100);
+                calendar.setCalendarTop(topGroup.getHeight() + 100);
             }
         });
 
         findViewById(R.id.test_set_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setCalendarLeft(100);
+                calendar.setCalendarLeft(100);
             }
         });
 
         findViewById(R.id.test_set_width).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setCalendarWidth(1000);
+                calendar.setCalendarWidth(1000);
             }
         });
 
         findViewById(R.id.test_set_height).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setCalendarHeight(1000);
+                calendar.setCalendarHeight(1000);
             }
         });
 
         findViewById(R.id.test_go_today).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.goToday();
+                calendar.goToday();
             }
         });
 
         findViewById(R.id.test_toggle_swipe).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setSwipeEnabled(!smartfaceCalendar.isSwipeEnabled());
+                calendar.setSwipeEnabled(!calendar.isSwipeEnabled());
             }
         });
 
         findViewById(R.id.test_toggle_touch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smartfaceCalendar.setTouchEnabled(!smartfaceCalendar.isTouchEnabled());
+                calendar.setTouchEnabled(!calendar.isTouchEnabled());
             }
         });
 
-        smartfaceCalendar = new SmartfaceCalendar(mainActivity);
-        smartfaceCalendar.setPreviousImage("left");
-        smartfaceCalendar.setNextImage("right");
-        smartfaceCalendar.setTheme(R.style.CaldroidDefaultDark);
+        calendar = new Calendar(mainActivity);
+        calendar.setPreviousImage("left");
+        calendar.setNextImage("right");
+        calendar.setTheme(R.style.CaldroidDefaultDark);
     }
 
     @Override
@@ -87,11 +87,11 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 if (!isCalendarAdded) {
-                    smartfaceCalendar.setLayoutParams(
+                    calendar.setLayoutParams(
                             AbsoluteLayout.LayoutParams.MATCH_PARENT,
                             AbsoluteLayout.LayoutParams.WRAP_CONTENT,
                             0, topGroup.getHeight());
-                    viewGroup.addView(smartfaceCalendar, 1);
+                    viewGroup.addView(calendar, 1);
                     isCalendarAdded = true;
                 }
             }

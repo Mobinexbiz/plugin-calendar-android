@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<biz.mobinex.smartfaceplugin.SmartfaceCalendar xmlns:android="http://schemas.android.com/apk/res/android"
+<biz.mobinex.smartfaceplugin.Calendar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,4 +22,4 @@
         android:background="@color/caldroid_light_red"
         android:backgroundTint="@color/caldroid_holo_blue_light" />
 
-</biz.mobinex.smartfaceplugin.SmartfaceCalendar>
+</biz.mobinex.smartfaceplugin.Calendar>

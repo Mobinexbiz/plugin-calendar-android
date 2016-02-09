@@ -22,7 +22,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -39,7 +38,7 @@ import io.smartface.plugin.SMFJSObject;
  * @see "https://github.com/roomorama/Caldroid"
  * @since 22.01.2016
  */
-public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.android.AndroidUI.WithGeometry {
+public class Calendar extends AbsoluteLayout implements io.smartface.android.AndroidUI.WithGeometry {
 
     /**
      * Date template for parsing date.
@@ -72,32 +71,32 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     /**
      * Javascript on touch callback.
      */
-    public SMFJSObject onTouch;
+    private SMFJSObject onTouch;
 
     /**
      * Javascript on touch end callback.
      */
-    public SMFJSObject onTouchEnd;
+    private SMFJSObject onTouchEnd;
 
     /**
      * Javascript on show callback.
      */
-    public SMFJSObject onShow;
+    private SMFJSObject onShow;
 
     /**
      * Javascript on hide callback.
      */
-    public SMFJSObject onHide;
+    private SMFJSObject onHide;
 
     /**
      * Touch enable value of javaCalendar view.
      */
-    public boolean touchEnabled = true;
+    private boolean touchEnabled = true;
 
     /**
      * Swipe enable value of javaCalendar view.
      */
-    public boolean swipeEnabled = true;
+    private boolean swipeEnabled = true;
 
     /**
      * Selected dates beginning.
@@ -160,7 +159,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Reference to instance.
      * To use in async methods.
      */
-    private SmartfaceCalendar smartfaceCalendar = this;
+    private Calendar calendar = this;
 
     /**
      * Caldroid instance.
@@ -220,13 +219,13 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
 
         @Override
         public void onChangeMonth(int month, int year) {
-            smartfaceCalendar.onChangeMonth(month, year);
+            calendar.onChangeMonth(month, year);
             //caldroidFragment.refreshView();
         }
 
         @Override
         public void onLongClickDate(Date date, View view) {
-            smartfaceCalendar.onLongClickDate(date);
+            calendar.onLongClickDate(date);
         }
 
         @Override
@@ -300,49 +299,34 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * @param calendarLeft                 Calendar calendarLeft position.
      * @param calendarTop                 Calendar calendarTop position.
      */
-    public SmartfaceCalendar(AppCompatActivity appCompatActivity, int width, int height, int calendarLeft, int calendarTop) {
+    public Calendar(AppCompatActivity appCompatActivity, int width, int height, int calendarLeft, int calendarTop) {
         super(appCompatActivity.getApplicationContext());
         this.appCompatActivity = appCompatActivity;
         setId(R.id.caldroid_container);
-
         this.width = width;
         this.height = height;
         this.calendarTop = calendarTop;
         this.calendarLeft = calendarLeft;
-
         LayoutParams params = new LayoutParams(width, height, calendarLeft, calendarTop);
         setLayoutParams(params);
-
-        setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
-            @Override
-            public void onSystemUiVisibilityChange(int visibility) {
-                try {
-                    if (visibility == VISIBLE) {
-                        if (onShow != null) onShow.callAsFunction(onShow, null);
-                    } else {
-                        if (onHide != null) onHide.callAsFunction(onShow, null);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        configureOnShowAndOnHideCallbacks();
     }
 
     /**
-     *
-     * @param appCompatActivity
+     * Constructor for use in Smartface.
+     * @param appCompatActivity Parent activity.
      */
-    public SmartfaceCalendar(AppCompatActivity appCompatActivity) {
+    public Calendar(AppCompatActivity appCompatActivity) {
         super(appCompatActivity.getApplicationContext());
         this.appCompatActivity = appCompatActivity;
         setId(R.id.caldroid_container);
+        configureOnShowAndOnHideCallbacks();
+    }
 
-        this.width = width;
-        this.height = height;
-        this.calendarTop = calendarTop;
-        this.calendarLeft = calendarLeft;
-
+    /**
+     * Configures onShow and onHide callbacks
+     */
+    private void configureOnShowAndOnHideCallbacks() {
         setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
             @Override
             public void onSystemUiVisibilityChange(int visibility) {
@@ -365,37 +349,15 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public void setTheme(int theme) {
         arguments.putInt(CaldroidFragment.THEME_RESOURCE, theme);
-
-        /*
-        Bundle arguments = caldroidFragment.getArguments();
-        if (arguments == null) arguments = new Bundle();
-        arguments.putInt(CaldroidFragment.THEME_RESOURCE, theme);
-        arguments.putInt(CaldroidFragment.MONTH, caldroidFragment.getMonth());
-        arguments.putInt(CaldroidFragment.YEAR, caldroidFragment.getYear());
-        caldroidFragment.setArguments(arguments);
-
-        View container = activity.findViewById(R.id.caldroid_container);
-
-        if (container != null) {
-            FragmentManager fm = appCompatActivity.getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.remove(caldroidFragment).commitAllowingStateLoss();
-            caldroidFragment = new CaldroidFragment();
-            caldroidFragment.setArguments(arguments);
-            caldroidFragment.setCaldroidListener(listener);
-            ft = fm.beginTransaction();
-            ft.replace(R.id.caldroid_container, caldroidFragment).commitAllowingStateLoss();
-        }
-        */
     }
 
     /**
-     *
+     * Creates Caldroid instanse and sets layout params when this view attached to any window.
      */
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        int firstDayOfWeek = Calendar.getInstance().getFirstDayOfWeek();
+        int firstDayOfWeek = java.util.Calendar.getInstance().getFirstDayOfWeek();
         arguments.putInt(CaldroidFragment.START_DAY_OF_WEEK, firstDayOfWeek);
         caldroidFragment = new CaldroidFragment();
         caldroidFragment.setArguments(arguments);
@@ -410,7 +372,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      *
      * @param context Context.
      */
-    public SmartfaceCalendar(Context context) {
+    private Calendar(Context context) {
         super(context);
     }
 
@@ -420,7 +382,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * @param context Context.
      * @param attrs   Attributes.
      */
-    public SmartfaceCalendar(Context context, AttributeSet attrs) {
+    private Calendar(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -431,7 +393,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * @param attrs        Attributes.
      * @param defStyleAttr Style.
      */
-    public SmartfaceCalendar(Context context, AttributeSet attrs, int defStyleAttr) {
+    private Calendar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -442,21 +404,21 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * @param endDate   End date.
      * @return Returns the list of dates between two dates.
      */
-    public static ArrayList<Date> getDaysBetweenDates(Date startDate, Date endDate) {
+    private static ArrayList<Date> getDaysBetweenDates(Date startDate, Date endDate) {
         ArrayList<Date> dates = new ArrayList<>();
-        Calendar calendar = new GregorianCalendar();
+        java.util.Calendar calendar = new GregorianCalendar();
         calendar.setTime(startDate);
         while (calendar.getTime().before(endDate)) {
             Date result = calendar.getTime();
             dates.add(result);
-            calendar.add(Calendar.DATE, 1);
+            calendar.add(java.util.Calendar.DATE, 1);
         }
         return dates;
     }
 
     /**
-     *
-     * @param calendarTop
+     * Setter for calendarTop.
+     * @param calendarTop Top coordinate of calendar.
      */
     public void setCalendarTop(int calendarTop) {
         this.calendarTop = calendarTop;
@@ -466,8 +428,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     }
 
     /**
-     *
-     * @param calendarLeft
+     * Setter for calendarLeft.
+     * @param calendarLeft Left coordinate of calendar.
      */
     public void setCalendarLeft(int calendarLeft) {
         this.calendarLeft = calendarLeft;
@@ -477,8 +439,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     }
 
     /**
-     *
-     * @param width
+     * Setter for calendar width.
+     * @param width Width of calendar.
      */
     public void setCalendarWidth(int width) {
         this.width = width;
@@ -488,8 +450,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
     }
 
     /**
-     *
-     * @param height
+     * Setter for calendar height.
+     * @param height Calendar height.
      */
     public void setCalendarHeight(int height) {
         this.height = height;
@@ -773,12 +735,13 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Setter for beginning of the selected dates.
      *
      * @param selectedFromDate Beginning of the selected dates as ISO date string.
+     * @param format Date format to parse selected date. Must be same format with selectedToDate.
      */
-    public void setSelectedFromDate(String selectedFromDate) {
+    public void setSelectedFromDate(String selectedFromDate, String format) {
         this.selectedFromDate = selectedFromDate;
 
         if (selectedToDate != null) {
-            setSelectedDates(selectedFromDate, selectedToDate);
+            setSelectedDates(selectedFromDate, selectedToDate, format);
         }
     }
 
@@ -795,12 +758,13 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Setter for selected dates ending.
      *
      * @param selectedToDate Selected dates ending as ISO date string.
+     * @param format Date format to parse selected date. Must be same format with selectedFromDate.
      */
-    public void setSelectedToDate(String selectedToDate) {
+    public void setSelectedToDate(String selectedToDate, String format) {
         this.selectedToDate = selectedToDate;
 
         if (selectedFromDate != null) {
-            setSelectedDates(selectedFromDate, selectedFromDate);
+            setSelectedDates(selectedFromDate, selectedFromDate, format);
         }
     }
 
@@ -820,16 +784,16 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * @param fromDate Beginning of the selected dates.
      * @param toDate   Selected dates ending.
      */
-    public void setSelectedDates(String fromDate, String toDate) {
+    public void setSelectedDates(String fromDate, String toDate, String format) {
         this.selectedFromDate = fromDate;
         this.selectedToDate = toDate;
-        SimpleDateFormat isoDateFormat =
+        SimpleDateFormat dateFormat =
                 new SimpleDateFormat(
-                        DATE_TEMPLATE, Locale.getDefault());
+                        format, Locale.getDefault());
         try {
             caldroidFragment.setSelectedDates(
-                    isoDateFormat.parse(fromDate),
-                    isoDateFormat.parse(toDate));
+                    dateFormat.parse(fromDate),
+                    dateFormat.parse(toDate));
             caldroidFragment.refreshView();
         } catch (ParseException e) {
             e.printStackTrace();
@@ -850,11 +814,11 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      *
      * @param disabledFromDate Start date of disabled dates.
      */
-    public void setDisabledFromDate(String disabledFromDate) {
+    public void setDisabledFromDate(String disabledFromDate, String format) {
         this.disabledFromDate = disabledFromDate;
 
         if (disabledToDate != null) {
-            setDisabledDates();
+            setDisabledDates(format);
         }
     }
 
@@ -872,21 +836,21 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      *
      * @param disabledToDate Ending date of disabled dates.
      */
-    public void setDisabledToDate(String disabledToDate) {
+    public void setDisabledToDate(String disabledToDate, String format) {
         this.disabledToDate = disabledToDate;
 
         if (disabledFromDate != null) {
-            setDisabledDates();
+            setDisabledDates(format);
         }
     }
 
     /**
      * Sets disabled dates between disabledFromDate and disabledToDate.
      */
-    private void setDisabledDates() {
+    private void setDisabledDates(String format) {
         SimpleDateFormat isoDateFormat =
                 new SimpleDateFormat(
-                        "EEE MMM dd HH:mm:ss zzz yyyy",
+                        format,
                         Locale.getDefault());
         try {
             Date fromDate = isoDateFormat.parse(disabledFromDate);
@@ -912,14 +876,14 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      *
      * @param disabledDates Disabled dates array.
      */
-    public void setDisabledDates(String[] disabledDates) {
+    public void setDisabledDates(String[] disabledDates, String format) {
         this.disabledDates = disabledDates;
         ArrayList<String> datesAsString = new ArrayList<>();
         datesAsString.addAll(Arrays.asList(disabledDates));
 
         SimpleDateFormat isoDateFormat =
                 new SimpleDateFormat(
-                        DATE_TEMPLATE, Locale.getDefault());
+                        format, Locale.getDefault());
 
         ArrayList<Date> dates = new ArrayList<>();
 
@@ -1012,7 +976,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      */
     public void setLocalization(String localization) {
         this.localization = localization;
-        Calendar calendar = Calendar.getInstance(new Locale(localization));
+        java.util.Calendar calendar = java.util.Calendar.getInstance(new Locale(localization));
         caldroidFragment.setCalendarDate(calendar.getTime());
         Bundle args = caldroidFragment.getArguments();
         args.putInt(CaldroidFragment.START_DAY_OF_WEEK, calendar.getFirstDayOfWeek());
@@ -1154,8 +1118,8 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
             if (onMonthChanged != null) {
                 JSONObject dateJson = new JSONObject();
                 dateJson.put(KEY_NEW_MONTH, month);
-                dateJson.put(KEY_OLD_MONTH, smartfaceCalendar.month);
-                smartfaceCalendar.month = month;
+                dateJson.put(KEY_OLD_MONTH, calendar.month);
+                calendar.month = month;
                 SMFJSObject[] arguments = new SMFJSObject[1];
                 arguments[0] = new SMFJSObject(dateJson);
                 Log.w(TAG, String.format(Locale.getDefault(), "CaldroidListener - onLongClickDate : %d - %d", month, year));
@@ -1279,7 +1243,7 @@ public class SmartfaceCalendar extends AbsoluteLayout implements io.smartface.an
      * Changes displayed month and selects today.
      */
     public void goToday() {
-        Calendar calendar = Calendar.getInstance();
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
         caldroidFragment.moveToDate(calendar.getTime());
     }
 
