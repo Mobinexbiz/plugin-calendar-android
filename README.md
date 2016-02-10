@@ -27,7 +27,7 @@ You can look following guides to understand how can you pass these steps:
 Features
 ========
 
-###Can be embedded or shown as dialog
+####Can be embedded or shown as dialog
 
 You can show SmartfaceCalendar as a dialogin your activity with below code:
 
@@ -43,7 +43,7 @@ var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
 Pages.Page1.add(calendar);
 ```
 
-###Can change layout parameters of calendar dynamically
+####Can change layout parameters of calendar dynamically
 
 You can pass layout parameters with constructor
 
@@ -59,7 +59,16 @@ or you can use default size. In this case Calendar will use `MATCH_PARENT` for w
 var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
 ```
 
-###Can change previous and next month button images
+or you can change each one separately
+
+``` Javascript
+calendar.setCalendarTop(700);
+calendar.setCalendarLeft(100);
+calendar.setCalendarWidth(1000);
+calendar.setCalendarHeight(1000);
+```
+
+####Can change previous and next month button images
 
 You should copy the images you want to use under `\resources\Images\android` folder in your project. You sould provide required images for every screen dpi supported. You do not need to use file extansions. Give only file name itself.
 
@@ -70,8 +79,58 @@ calendar.setNextImage("right");
 calendar.setPreviousImage("left");
 ```
 
-###Can anable or disable swipe to change month
+####Can anable or disable swipe to change month
 
 ``` Javascript
 calendar.setSwipeEnabled(false);
+```
+
+####Can anable or disable touch
+
+``` Javascript
+calendar.setTouchEnabled(false);
+```
+
+####Can go to today programlamatically
+
+``` Javascript
+calendar.goToday();
+```
+
+##Date methods
+
+Dates funcstions of calendar accepts dates as `String` or `long`. When using dates as String user should always provide the format of the date string.
+
+####Can set minimum and maximum date
+
+User can set minimum and maximum date. Dates before minimum date and dates after maximum date will be disabled.
+
+``` Javascript
+calendar.setMinDate("01.01.2000", dateFormat);
+calendar.setMaxDate("01.01.2001", dateFormat);
+```
+
+####Can disable dates
+
+User can disable dates between two dates
+
+``` Javascript
+calendar.setDisabledFromDate("01.01.2000", dateFormat);
+calendar.setDisabledToDate("01.01.2001", dateFormat);
+```
+
+or can disable array of dates
+
+``` Javascript
+calendar.setDisabledDates(datesArray, dateFormat);
+```
+
+####Can select dates
+
+User can select dates between two dates
+
+``` Javascript
+calendar.setSelectedFromDate("01.01.2000", dateFormat);
+calendar.setSelectedToDate("01.01.2001", dateFormat);
+calendar.setSelectedDates("01.01.2000", "01.01.2001", dateFormat);
 ```
