@@ -43,6 +43,23 @@ var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
 Pages.Page1.add(calendar);
 ```
 
+####Can set year and month
+
+Month value should be between 1 - 12
+
+``` Javascript
+calendar.setYear(2000);
+calendar.setMonth(1);
+```
+
+####Can set start day of the week
+
+Start day value should be one of the Java Calendar day values: Sunday to Saturday (1-7)
+
+``` Javascript
+calendar.setStartDayOfWeek(2); //Calendar.MONDAY
+```
+
 ####Can change layout parameters of calendar dynamically
 
 You can pass layout parameters with constructor
@@ -97,6 +114,12 @@ calendar.setTouchEnabled(false);
 calendar.goToday();
 ```
 
+####Can set title of the calendar dialog
+
+``` Javascript
+calendar.setTitle("Select Date");
+```
+
 ##Date methods
 
 Dates funcstions of calendar accepts dates as `String` or `long`. When using dates as String user should always provide the format of the date string.
@@ -134,3 +157,4 @@ calendar.setSelectedFromDate("01.01.2000", dateFormat);
 calendar.setSelectedToDate("01.01.2001", dateFormat);
 calendar.setSelectedDates("01.01.2000", "01.01.2001", dateFormat);
 ```
+
