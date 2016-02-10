@@ -41,3 +41,37 @@ You can also embed caldroid fragment as a child in your application.
 ``` Javascript
 var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
 Pages.Page1.add(calendar);
+```
+
+###Can change layout parameters of calendar dynamically
+
+You can pass layout parameters with constructor
+
+``` Javascript
+var calendar= new SmartfaceCalendar(
+	"Landroid/app/Activity;", 
+	1000, 1000, 0, 0);
+```
+
+or you can use default size. In this case Calendar will use `MATCH_PARENT` for width, `WRAP_CONTEN` for height and `0` as top and left parameters.
+
+``` Javascript
+var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
+```
+
+###Can change previous and next month button images
+
+You should copy the images you want to use under `\resources\Images\android` folder in your project. You sould provide required images for every screen dpi supported. You do not need to use file extansions. Give only file name itself.
+
+You should call `setNextImage` and `setPreviousImage` before adding calendar view or showing calendar dialog.
+
+``` Javascript
+calendar.setNextImage("right");
+calendar.setPreviousImage("left");
+```
+
+###Can anable or disable swipe to change month
+
+``` Javascript
+calendar.setSwipeEnabled(false);
+```
