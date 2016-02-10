@@ -3,6 +3,8 @@ Smartface Calendar Plugin Android
 
 Smartface Calendar Plugin for Android is one of the first plugins of Smartface Plugin Project. This project is based on Caldroid project. It provides month based view. It can be used as a view or as a dialog. It suppots swipe to change month, theme support to costumezie view and full localization. Calendar plugin works with Android API 16 and above.
 
+<img src="http://imgur.com/ifJonYx" width="270">
+
 Setup
 =====
 
