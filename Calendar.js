@@ -29,7 +29,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {string}
      * @default
      */
-    Calendar.DATE_TEMPLATE = "";
+    Calendar.prototype.DATE_TEMPLATE = "";
 
     /**
      * Log tag.
@@ -40,7 +40,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {string}
      * @default
      */
-    Calendar.TAG = "";
+    Calendar.prototype.TAG = "";
 
     /**
      * Key of parameter "newMonth" in arguments bundle.
@@ -50,7 +50,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @public
      * @type {string}
      */
-    Calendar.KEY_NEW_MONTH = "";
+    Calendar.prototype.KEY_NEW_MONTH = "";
 
     /**
      * Key of parameter "oldMonth" in arguments bundle.
@@ -60,7 +60,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @public
      * @type {string}
      */
-    Calendar.KEY_OLD_MONTH = "";
+    Calendar.prototype.KEY_OLD_MONTH = "";
 
     /**
      * SMFJ object reference.
@@ -70,7 +70,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @public
      * @object
      */
-    Calendar.smfJSClass = null;
+    Calendar.prototype.smfJSClass = null;
 
     /**
      * On touch event.
@@ -78,7 +78,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onTouch = null;
+    Calendar.prototype.onTouch = null;
 
     /**
      * On touch end event.
@@ -86,7 +86,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onTouchEnd = null;
+    Calendar.prototype.onTouchEnd = null;
 
     /**
      * On show event.
@@ -94,7 +94,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onShow = null;
+    Calendar.prototype.onShow = null;
 
     /**
      * On hide event.
@@ -102,7 +102,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onHide = null;
+    Calendar.prototype.onHide = null;
 
     /**
      * Touch enabled option.
@@ -110,7 +110,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {boolean}
      */
-    Calendar.touchEnabled = true;
+    Calendar.prototype.touchEnabled = true;
 
     /**
      * Swipe enabled option.
@@ -118,7 +118,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {boolean}
      */
-    Calendar.swipeEnabled = true;
+    Calendar.prototype.swipeEnabled = true;
 
     /**
      * Start date of selected dates.
@@ -126,7 +126,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {string}
      */
-    Calendar.selectedFromDate = null;
+    Calendar.prototype.selectedFromDate = null;
 
     /**
      * End date of selected dates.
@@ -134,7 +134,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {string}
      */
-    Calendar.selectedToDate = null;
+    Calendar.prototype.selectedToDate = null;
 
     /**
      * List of selected days.
@@ -142,7 +142,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {Array.<String>}
      */
-    Calendar.selectedDates = null;
+    Calendar.prototype.selectedDates = null;
 
     /**
      * Start date of disabled dates.
@@ -150,7 +150,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {string}
      */
-    Calendar.disabledFromDate = null;
+    Calendar.prototype.disabledFromDate = null;
 
     /**
      * End date of disabled dates.
@@ -158,7 +158,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {string}
      */
-    Calendar.disabledToDate = null;
+    Calendar.prototype.disabledToDate = null;
 
     /**
      * List of disabled dates.
@@ -166,7 +166,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {Array.<String>}
      */
-    Calendar.disabledToDate = null;
+    Calendar.prototype.disabledToDate = null;
 
 
     /**
@@ -175,7 +175,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onDateSelected = null;
+    Calendar.prototype.onDateSelected = null;
 
     /**
      * On date long pressed event.
@@ -183,7 +183,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onLongPressed = null;
+    Calendar.prototype.onLongPressed = null;
 
     /**
      * On month changed event.
@@ -191,7 +191,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @event
      */
-    Calendar.onMonthChanged = null;
+    Calendar.prototype.onMonthChanged = null;
 
     /**
      * Reference to self.
@@ -199,7 +199,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @object
      */
-    Calendar.calendar = null;
+    Calendar.prototype.calendar = null;
 
     /**
      * Reference to Caldroid instance.
@@ -207,7 +207,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @object
      */
-    Calendar.caldroidFragment = null;
+    Calendar.prototype.caldroidFragment = null;
 
     /**
      * Calendar title for when used as dialog.
@@ -215,7 +215,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {String}
      */
-    Calendar.title = null;
+    Calendar.prototype.title = null;
 
     /**
      * Year of the calendar.
@@ -223,7 +223,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {int}
      */
-    Calendar.year = 0;
+    Calendar.prototype.year = 0;
 
     /**
      * Month of the calendar.
@@ -231,7 +231,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {int}
      */
-    Calendar.month = 0;
+    Calendar.prototype.month = 0;
 
     /**
      * Top position of calendar relative to its parent.
@@ -240,7 +240,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {int}
      * @default
      */
-    Calendar.calendarTop = 0;
+    Calendar.prototype.calendarTop = 0;
 
     /**
      * Left position of calendar relative to its parent.
@@ -249,7 +249,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {int}
      * @default
      */
-    Calendar.calendarLeft = 0;
+    Calendar.prototype.calendarLeft = 0;
 
     /**
      * Width of calendar.
@@ -258,7 +258,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {int}
      * @default
      */
-    Calendar.width = -2;
+    Calendar.prototype.width = -2;
 
     /**
      * Height of calendar.
@@ -267,7 +267,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {int}
      * @default
      */
-    Calendar.height = -2;
+    Calendar.prototype.height = -2;
 
 
     /**
@@ -277,7 +277,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @object
      */
-    Calendar.listener = null;
+    Calendar.prototype.listener = null;
 
     /**
      * Fill color of calendar cells.
@@ -286,7 +286,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @type {String}
      * @default
      */
-    Calendar.fillColor = null;
+    Calendar.prototype.fillColor = null;
 
     /**
      * File name of next month button image.
@@ -294,7 +294,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {String}
      */
-    Calendar.nextImage = null;
+    Calendar.prototype.nextImage = null;
 
     /**
      * File name of previous month button image.
@@ -302,7 +302,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {String}
      */
-    Calendar.previousImage = null;
+    Calendar.prototype.previousImage = null;
 
     /**
      * Locale of calendar.
@@ -310,7 +310,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {String}
      */
-    Calendar.localization = null;
+    Calendar.prototype.localization = null;
 
     /**
      * Min date of calendar. Dates before min date are disabled.
@@ -318,7 +318,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {String}
      */
-    Calendar.minDate = null;
+    Calendar.prototype.minDate = null;
 
     /**
      * Max date of calendar. Dates after max date are disabled.
@@ -326,7 +326,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @type {String}
      */
-    Calendar.maxDate = null;
+    Calendar.prototype.maxDate = null;
 
     /**
      * Calendar arguments.
@@ -334,7 +334,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @object
      */
-    Calendar.arguments = null;
+    Calendar.prototype.arguments = null;
 
     /**
      * Reference to parent AppCompatActivity.
@@ -342,7 +342,7 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * @private
      * @object
      */
-    Calendar.appCompatActivity = null;
+    Calendar.prototype.appCompatActivity = null;
 
 
     /**
