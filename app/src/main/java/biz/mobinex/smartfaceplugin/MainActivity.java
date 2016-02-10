@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Calendar calendar;
+    private SmartfaceCalendar smartfaceCalendar;
     private LinearLayout topGroup;
     private ViewGroup viewGroup;
     private MainActivity mainActivity = this;
@@ -26,56 +25,51 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.test_set_top).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.setCalendarTop(topGroup.getHeight() + 100);
+                smartfaceCalendar.setCalendarTop(topGroup.getHeight() + 100);
             }
         });
 
         findViewById(R.id.test_set_left).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.setCalendarLeft(100);
+                smartfaceCalendar.setCalendarLeft(100);
             }
         });
 
         findViewById(R.id.test_set_width).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.setCalendarWidth(1000);
+                smartfaceCalendar.setCalendarWidth(1000);
             }
         });
 
         findViewById(R.id.test_set_height).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.setCalendarHeight(1000);
+                smartfaceCalendar.setCalendarHeight(1000);
             }
         });
 
         findViewById(R.id.test_go_today).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.goToday();
+                smartfaceCalendar.goToday();
             }
         });
 
         findViewById(R.id.test_toggle_swipe).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.setSwipeEnabled(!calendar.isSwipeEnabled());
+                smartfaceCalendar.setSwipeEnabled(!smartfaceCalendar.isSwipeEnabled());
             }
         });
 
         findViewById(R.id.test_toggle_touch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendar.setTouchEnabled(!calendar.isTouchEnabled());
+                smartfaceCalendar.setTouchEnabled(!smartfaceCalendar.isTouchEnabled());
             }
         });
-
-        calendar = new Calendar(mainActivity);
-        calendar.setPreviousImage("left");
-        calendar.setNextImage("right");
-        calendar.setTheme(R.style.CaldroidDefaultDark);
     }
 
     @Override
@@ -87,11 +81,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
 
                 if (!isCalendarAdded) {
-                    calendar.setLayoutParams(
-                            AbsoluteLayout.LayoutParams.MATCH_PARENT,
-                            AbsoluteLayout.LayoutParams.WRAP_CONTENT,
-                            0, topGroup.getHeight());
-                    viewGroup.addView(calendar, 1);
+                    smartfaceCalendar = new SmartfaceCalendar(mainActivity);
+                    smartfaceCalendar.setTheme(R.style.CaldroidDefaultDark);
+                    viewGroup.addView(smartfaceCalendar, 1);
                     isCalendarAdded = true;
                 }
             }

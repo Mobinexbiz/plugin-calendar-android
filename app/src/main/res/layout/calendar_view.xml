@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="?styleCaldroidViewLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    style="?styleCaldroidViewLayout"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/calendar_title_view"
@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/calendar_month_year_textview"
-            style="?styleCaldroidMonthName" />
+            style="?styleCaldroidMonthName"/>
 
         <Button
             android:id="@+id/calendar_right_arrow"
@@ -30,12 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="-10dp"
         android:numColumns="7"
-        android:stretchMode="columnWidth" />
+        android:stretchMode="columnWidth" >
+    </GridView>
 
-    <com.antonyt.infiniteviewpager.InfiniteViewPager
+    <infiniteviewpager.InfiniteViewPager
         android:id="@+id/months_infinite_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

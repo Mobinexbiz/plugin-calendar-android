@@ -4,11 +4,11 @@ if (Device.deviceOS === "IDE") { //making sure that this code will not run on ru
      * Calendar constructor.
      * @class
      * @constructs
-     * @param appCompatActivity, must be "Landroid/app/Activity;".
-     * @param width, calendar width.
-     * @param height, calendar height.
-     * @param calendarLeft, left position og the calendar relative to its parent.
-     * @param calendarTop, top position og the calendar relative to its parent.
+     * @param {String} appCompatActivity, must be "Landroid/app/Activity;".
+     * @param {number} width, calendar width.
+     * @param {number} height, calendar height.
+     * @param {number} calendarLeft, left position og the calendar relative to its parent.
+     * @param {number} calendarTop, top position og the calendar relative to its parent.
      */
     function Calendar(appCompatActivity, width, height, calendarLeft, calendarTop) {};
 
