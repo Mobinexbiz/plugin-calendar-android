@@ -14,7 +14,7 @@ To start using Calendar plugin you need to follow below steps:
  - Copy plugin file to Smartface plugin folder.
  - Select Calendar plugin in Smartface project settings.
  
- If you want to rebuild the plugin you can use `buildplugin.bat` file in project root folder. Be sure that `CLI` is installed and in your `PATH`.
+If you want to rebuild the plugin you can use `buildplugin.bat` file in project root folder. Be sure that `CLI` is installed and in your `PATH`.
 
 To use Calendar with auto complete support (Optional)
 
