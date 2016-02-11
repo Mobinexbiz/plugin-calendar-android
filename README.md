@@ -60,6 +60,14 @@ Start day value should be one of the Java Calendar day values: Sunday to Saturda
 calendar.setStartDayOfWeek(2); //Calendar.MONDAY
 ```
 
+####Can set locale
+
+User can set locale of the calendar. If user don't set locale default locale will be used.
+
+``` Javascript
+calendar.setLocale("tr_TR");
+```
+
 ####Can change layout parameters of calendar dynamically
 
 You can pass layout parameters with constructor
@@ -158,3 +166,62 @@ calendar.setSelectedToDate("01.01.2001", dateFormat);
 calendar.setSelectedDates("01.01.2000", "01.01.2001", dateFormat);
 ```
 
+##Events
+
+SmartfaceCalendar supports fololowing events to notify user:
+
+####onTouch
+``` Javascript
+calendar.setOnTouch(function (e) {
+	alert("onTouch");
+	log("onTouch");
+});
+```
+
+####onTouchEnd
+``` Javascript
+calendar.setOnTouchEnd(function (e) {
+	alert("onTouchEnd");
+	log("onTouchEnd");
+});
+```
+
+####onShow
+``` Javascript
+calendar.setOnShow(function (e) {
+	alert("onShow");
+	log("onShow");
+});
+```
+
+####onHide
+``` Javascript
+calendar.setOnHide(function (e) {
+	alert("onHide");
+	log("onHide");
+});
+```
+
+####onDateSelected
+``` Javascript
+calendar.setOnDateSelected(function (e) {
+	alert("Date selected: " + e.date);
+	log("Date selected: " + e.date);
+});
+```
+
+####onLongPressed
+``` Javascript
+calendar.setOnLongPressed(function (e) {
+	alert("Long pressed on date : " + e.date);
+	log("Long pressed on date : " + e.date);
+});
+```
+
+####onMonthChanged
+``` Javascript
+alendar.setOnMonthChanged(function (e) {
+	alert("Month changed : " + e.oldMonth + " → " +  + e.newMonth);
+	log("Month changed : " + e.oldMonth + " → " +  + e.newMonth);
+});
+```
