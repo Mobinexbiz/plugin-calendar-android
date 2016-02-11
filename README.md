@@ -1,7 +1,7 @@
 Smartface Calendar Plugin Android
 ===================
 
-Smartface Calendar Plugin for Android is one of the first plugins of Smartface Plugin Project. This project is based on Caldroid project. It provides month based view. It can be used as a view or as a dialog. It suppots swipe to change month and full localization. Calendar plugin works with Android API 16 and above.
+Smartface Calendar Plugin for Android is one of the first plugins of Smartface Plugin Project. This project is based on Caldroid project. It provides month based view. It can be used as a view or as a dialog. It supports swipe to change month and full localization. Calendar plugin works with Android API 16 and above.
 
 <img src="http://imgur.com/ifJonYx.png">
 
@@ -13,23 +13,26 @@ To start using Calendar plugin you need to follow below steps:
  - Download plugin file.
  - Copy plugin file to Smartface plugin folder.
  - Select Calendar plugin in Smartface project settings.
+ 
+ If you want to rebuild the plugin you can use `buildplugin.bat` file in project root folder. Be sure that `CLI` is installed and in your `PATH`.
 
-To use Calendar with auto complate support (Optional)
+To use Calendar with auto complete support (Optional)
 
- - Copy Calendar auto complate Javascript file to your project folder.
- - Load auto complate file in global.
+ - Copy Calendar auto complete Javascript file to your project folder.
+ - Load auto complete file in global.
 
 You can look following guides to understand how can you pass these steps:
 
  - Adding a plugin to Smartface projects
- - Adding auto complate support for plugins
+ - Adding auto complete support for plugins
+ - Installing CLI and adding it to PATH.
 
 Features
 ========
 
 ####Can be embedded or shown as dialog
 
-You can show SmartfaceCalendar as a dialogin your activity with below code:
+You can show SmartfaceCalendar as a dialog in your activity with below code:
 
 ``` Javascript
 var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
@@ -78,7 +81,7 @@ var calendar= new SmartfaceCalendar(
 	1000, 1000, 0, 0);
 ```
 
-or you can use default size. In this case Calendar will use `MATCH_PARENT` for width, `WRAP_CONTEN` for height and `0` as top and left parameters.
+or you can use default size. In this case Calendar will use `MATCH_PARENT` for width, `WRAP_CONTENT` for height and `0` as top and left parameters.
 
 ``` Javascript
 var calendar= new SmartfaceCalendar("Landroid/app/Activity;");
@@ -95,7 +98,7 @@ calendar.setCalendarHeight(1000);
 
 ####Can change previous and next month button images
 
-You should copy the images you want to use under `\resources\Images\android` folder in your project. You sould provide required images for every screen dpi supported. You do not need to use file extansions. Give only file name itself.
+You should copy the images you want to use under `\resources\Images\android` folder in your project. You should provide required images for every screen dpi supported. You do not need to use file extensions. Give only file name itself.
 
 You should call `setNextImage` and `setPreviousImage` before adding calendar view or showing calendar dialog.
 
@@ -104,7 +107,7 @@ calendar.setNextImage("right");
 calendar.setPreviousImage("left");
 ```
 
-####Can anable or disable swipe to change month
+####Can enable or disable swipe to change month
 
 ``` Javascript
 calendar.setSwipeEnabled(false);
@@ -116,7 +119,7 @@ calendar.setSwipeEnabled(false);
 calendar.setTouchEnabled(false);
 ```
 
-####Can go to today programlamatically
+####Can go to today programmatically
 
 ``` Javascript
 calendar.goToday();
@@ -130,7 +133,7 @@ calendar.setTitle("Select Date");
 
 ##Date methods
 
-Dates funcstions of calendar accepts dates as `String` or `long`. When using dates as String user should always provide the format of the date string.
+Dates functions of calendar accepts dates as `String` or `long`. When using dates as String user should always provide the format of the date string.
 
 ####Can set minimum and maximum date
 
@@ -168,7 +171,7 @@ calendar.setSelectedDates("01.01.2000", "01.01.2001", dateFormat);
 
 ##Events
 
-SmartfaceCalendar supports fololowing events to notify user:
+SmartfaceCalendar supports following events to notify user:
 
 ####onTouch
 ``` Javascript
@@ -220,7 +223,7 @@ calendar.setOnLongPressed(function (e) {
 
 ####onMonthChanged
 ``` Javascript
-alendar.setOnMonthChanged(function (e) {
+calendar.setOnMonthChanged(function (e) {
 	alert("Month changed : " + e.oldMonth + " → " +  + e.newMonth);
 	log("Month changed : " + e.oldMonth + " → " +  + e.newMonth);
 });
