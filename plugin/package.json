@@ -1,0 +1,9 @@
+{
+  "name": "Calendar",
+  "version": "1.0.0",
+  "description": "Calendar for Smartface by Mobinex.",
+  "author": "Mobinex",
+  "license": "ISC",
+  "OS": "Android",
+  "cpu": ["arm"]
+}

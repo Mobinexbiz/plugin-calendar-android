@@ -89,6 +89,22 @@ public class SmartfaceCalendar extends AbsoluteLayout implements WithGeometry {
     private SMFJSObject onHide;
 
     /**
+     * Javascript callback for on date selected callback.
+     * Used in Caldroid listener.
+     */
+    private SMFJSObject onDateSelected = null;
+
+    /**
+     * Javascript callback for on long pressed callback.
+     */
+    private SMFJSObject onLongPressed;
+
+    /**
+     * Javascript callback for on month changed callback.
+     */
+    private SMFJSObject onMonthChanged;
+
+    /**
      * Touch enable value of javaCalendar view.
      */
     private boolean touchEnabled = true;
@@ -138,22 +154,6 @@ public class SmartfaceCalendar extends AbsoluteLayout implements WithGeometry {
      * Default is null;
      */
     public String[] disabledDates;
-
-    /**
-     * Javascript callback for on date selected callback.
-     * Used in Caldroid listener.
-     */
-    private SMFJSObject onDateSelected = null;
-
-    /**
-     * Javascript callback for on long pressed callback.
-     */
-    private SMFJSObject onLongPressed;
-
-    /**
-     * Javascript callback for on month changed callback.
-     */
-    private SMFJSObject onMonthChanged;
 
     /**
      * Reference to instance.
@@ -988,8 +988,10 @@ public class SmartfaceCalendar extends AbsoluteLayout implements WithGeometry {
      */
     public void setLocalization(String localization) {
         this.localization = localization;
-        if (caldroidFragment != null)
+        if (caldroidFragment != null) {
             caldroidFragment.setLocale(localization);
+            caldroidFragment.refreshView();
+        }
     }
 
     /**
