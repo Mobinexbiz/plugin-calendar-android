@@ -228,3 +228,8 @@ calendar.setOnMonthChanged(function (e) {
 	log("Month changed : " + e.oldMonth + " → " +  + e.newMonth);
 });
 ```
+
+Release Notes
+========
+
+Read the [RELEASE-NOTES.md](https://github.com/SmartfaceIO/plugin-calendar-android/blob/master/RELEASE-NOTES.md) file.
